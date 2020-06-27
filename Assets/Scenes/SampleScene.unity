@@ -208,12 +208,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2130373309}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &78959033 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2057042530, guid: dd6ec056f2f6bb849a31ccbad97cb0d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 222263874}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &202904897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46349,9 +46343,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3903268544780896972, guid: dd6ec056f2f6bb849a31ccbad97cb0d1,
         type: 3}
-      propertyPath: _collectEffect
+      propertyPath: _playerCollision.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 78959033}
+      objectReference: {fileID: 1775106136}
     - target: {fileID: 178798382736798723, guid: dd6ec056f2f6bb849a31ccbad97cb0d1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -47615,6 +47609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775106135}
   - component: {fileID: 1775106134}
+  - component: {fileID: 1775106136}
   m_Layer: 0
   m_Name: AllMoney
   m_TagString: Untagged
@@ -47695,6 +47690,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775106136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775106133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973bd1d12d07a5a42b3744ed8bc6fb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1827935215
 GameObject:
   m_ObjectHideFlags: 0
