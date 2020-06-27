@@ -10,9 +10,16 @@ public class Money : MonoBehaviour
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private AudioSource _collectAudio;
 
+    private MoneyCounter _moneyCounter;
+
     private bool _isTaken = false;
 
     public bool IsTaken => _isTaken;
+
+    private void Start()
+    {
+        _moneyCounter = GetComponentInParent<MoneyCounter>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +27,7 @@ public class Money : MonoBehaviour
         {
             _isTaken = true;
             _collectAudio.Play();
+            _moneyCounter?.CheckMoneyRemain();
             _playerCollision.Invoke();
             _sprite.color = Color.clear;
         }

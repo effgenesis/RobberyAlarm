@@ -31,12 +31,12 @@ public class AlarmSystem : MonoBehaviour
         CheckLasers();
         if (_isActive)
         {
-            _time += UnityEngine.Time.deltaTime;
+            _time += Time.deltaTime;
             
         }
         else if (_time > 0)
         {
-            _time -= UnityEngine.Time.deltaTime * 4f;
+            _time -= Time.deltaTime * 4f;
         }
         else
         {
@@ -106,14 +106,8 @@ public class AlarmSystem : MonoBehaviour
 
     private bool CheckForVictory()
     {
-        Money[] allMoney = GameObject.FindObjectsOfType<Money>();
-        foreach (var money in allMoney)
-        {
-            if (!money.IsTaken)
-            {
-                return false;
-            }
-        }
-        return true;
+        MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
+        if (moneyCounter.NoMoneyRemain) { return true; }
+        return false;
     }
 }
