@@ -11,19 +11,18 @@ public class AlarmSystem : MonoBehaviour
     [SerializeField] private float _timeout;
     [SerializeField] private float _timeRedZone;
     [SerializeField] private AudioSource _alarmAudio;
-    [SerializeField] private AudioSource _gameoverAudio;
-    [SerializeField] private AudioSource _victoryAudio;
-    [SerializeField] private UnityEvent _gameover;
-    [SerializeField] private UnityEvent _victory;
+    [SerializeField] private AudioSource _timeoutAudio;
+    [SerializeField] private UnityEvent _playerLeaveHouse;
+    [SerializeField] private UnityEvent _timeIsUp;
 
     private float _time;
     private float _timeoutNormalized;
     private bool _isActive = false;
-    private bool _gameoverFlag = false;
-    public bool _gameoverIsClose = false;
+    private bool _timeoutFlag = false;
+    public bool _timeoutIsClose = false;
 
     public float TimeoutNormalized => _timeoutNormalized;
-    public bool GameoverIsClose => _gameoverIsClose;
+    public bool GameoverIsClose => _timeoutIsClose;
 
     void Update()
     {
@@ -45,23 +44,23 @@ public class AlarmSystem : MonoBehaviour
         }
         _timeoutNormalized = _time / _timeout;
         _alarmAudio.volume = TimeoutNormalized;
-        _gameoverAudio.volume = (_time - _timeRedZone) / (_timeout - _timeRedZone);
-        if (!_gameoverFlag && TimeoutNormalized >= 1)
+        _timeoutAudio.volume = (_time - _timeRedZone) / (_timeout - _timeRedZone);
+        if (!_timeoutFlag && TimeoutNormalized >= 1)
         {
             _time = _timeout;
             _alarmAudio.Stop();
-            _gameover.Invoke();
-            _gameoverFlag = true;
+            _timeIsUp.Invoke();
+            _timeoutFlag = true;
         }
         if (!GameoverIsClose && _time >= _timeRedZone)
         {
-            _gameoverAudio.Play();
-            _gameoverIsClose = true;
+            _timeoutAudio.Play();
+            _timeoutIsClose = true;
         }
         else if (GameoverIsClose && _time < _timeRedZone)
         {
-            _gameoverAudio.Stop();
-            _gameoverIsClose = false;
+            _timeoutAudio.Stop();
+            _timeoutIsClose = false;
         }
     }
 
@@ -94,20 +93,13 @@ public class AlarmSystem : MonoBehaviour
         {
             _isActive = false;
             Debug.Log("Deactivate");
-            if (CheckForVictory())
-            {
-                _victory.Invoke();
-                _alarmAudio.Stop();
-                _gameoverAudio.Stop();
-                _victoryAudio.Play();
-            }
+            _playerLeaveHouse.Invoke();
         }
     }
 
-    private bool CheckForVictory()
+    public void StopSounds()
     {
-        MoneyCounter moneyCounter = FindObjectOfType<MoneyCounter>();
-        if (moneyCounter.NoMoneyRemain) { return true; }
-        return false;
+        _alarmAudio.Stop();
+        _timeoutAudio.Stop();
     }
 }
